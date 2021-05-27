@@ -1,0 +1,18 @@
+@value accent: #006FFF;
+@value primary: #1E1E1E;
+
+@value button-label: #4F5763;
+@value button-border: #E5E7EB;
+@value button-background: #F3F4F6;
+@value button-background-hover: #F3F4F6;
+
+@value input-label: #0A0A0A;
+@value input-color: #4F5763;
+@value input-background: #F7F7F8;
+@value input-option-label: #4F5763;
+@value input-option-sub-label: #838991;
+
+@value pagination-color: #4F5763;
+@value pagination-border: #E5E7EB;
+@value pagination-background: #F3F4F6;
+@value pagination-background-active: #DEE2E5;

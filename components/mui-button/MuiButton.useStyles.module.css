@@ -1,0 +1,64 @@
+@value button-label from '@config/colors.module.css';
+@value button-border from '@config/colors.module.css';
+@value button-background from '@config/colors.module.css';
+@value button-background-hover from '@config/colors.module.css';
+
+/* /////////////////////////////////////////// */
+
+.mui-button {
+  @apply relative;
+  border-color: button-border;
+  background-color: button-background;
+  @apply flex justify-center items-center border border-solid;
+  @apply h-[35px] max-h-[35px] p-[5px] px-[15px] rounded-[8px];
+}
+
+.mui-button:hover { 
+  background-color: button-background-hover;
+}
+
+.mui-button .container {
+  @apply flex flex-row-reverse;
+  @apply justify-center items-center;
+}
+
+.mui-button .container > div[data-role="label"] {
+  color: button-label;
+  @apply flex text-[12px] tracking-[1px];
+  @apply font-semibold uppercase mt-[1px];
+}
+
+.mui-button .container > div[data-role="icon"] {
+  @apply mr-[8px];
+}
+
+.mui-button .container > div[data-role="icon"] > svg {
+  color: button-label;
+  @apply stroke-[2px] text-[14px];
+}
+
+/* /////////////////////////////////////////// */
+
+.mui-button .container-skeleton {
+  @apply flex flex-col px-[10px];
+  @apply absolute inset-0 justify-center;
+}
+
+.mui-button .container-skeleton > span:nth-child(2) { 
+  @apply mt-[5px];
+}
+
+.mui-button .skeleton {
+  @apply w-[90%] h-[3px] max-w-[100px];
+  @apply transform-none bg-[rgba(0,0,0,0.1)];
+}
+
+.mui-button .skeleton:nth-child(2) { 
+  @apply w-[70%] h-[3px] max-w-[80px];
+}
+
+.mui-button .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent);
+}
+
+/* /////////////////////////////////////////// */

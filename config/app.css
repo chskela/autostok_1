@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+body, html {
+  overflow: hidden;
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  background-color: transparent !important;
+}
+
+body > div:nth-child(1) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%; height: 100%;
+}
+
+body *:focus{ 
+  outline: none !important;
+}
+
+body *{
+  box-sizing: border-box;
+  font-weight: 400; letter-spacing: 0.5px;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration { -webkit-appearance:none; }
+
+/*///////////////////////////////////////////////*/
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/*///////////////////////////////////////////////*/

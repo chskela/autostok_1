@@ -1,0 +1,31 @@
+@value accent from '@config/colors.module.css';
+
+/* /////////////////////////////////////////// */
+
+.mui-tab {
+  @apply opacity-100 p-[6px] m-0;
+  @apply min-w-[120px] min-h-[100%];
+}
+
+.mui-tab  > span:nth-child(2) {
+  @apply hidden;
+}
+
+.mui-tab > span > div[data-role="label"] {
+  @apply text-[13px] font-medium;
+  @apply tracking-[1px] normal-case;
+}
+
+/* /////////////////////////////////////////// */
+
+.mui-tabs {
+  @apply min-h-[auto]
+}
+
+.mui-tabs > div > span {
+  background-color: accent;
+  @apply w-[70px] !important;
+  @apply h-[2px] z-[1] ml-[25px];
+}
+
+/* /////////////////////////////////////////// */

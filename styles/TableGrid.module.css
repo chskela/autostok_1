@@ -1,0 +1,37 @@
+/* /////////////////////////////////////////// */
+
+.table-row {
+  @apply cursor-pointer;
+  @apply grid gap-2 py-2;
+  @apply border-b border-gray-300;
+}
+
+.table-row:hover {
+  @apply bg-gray-100;
+}
+
+.table-row > div {
+  @apply text-[12px] text-[#555];
+  @apply font-normal tracking-[0.7px];
+}
+
+/* /////////////////////////////////////////// */
+
+.table-header {
+  @apply grid gap-2 py-2;
+  @apply border-b border-gray-300;
+}
+
+.table-header > div {
+  @apply text-[11px] text-[#000];
+  @apply font-medium tracking-[1px];
+}
+
+.table-header > div:first-child, .table-row > div:first-child {
+  @apply pl-2;
+}
+
+.table-header > div:last-child, .table-row > div:last-child {
+  @apply pr-2;
+} 
+/* /////////////////////////////////////////// */

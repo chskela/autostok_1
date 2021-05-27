@@ -1,0 +1,157 @@
+@value accent from '@config/colors.module.css';
+@value primary from '@config/colors.module.css';
+
+/* /////////////////////////////////////////// */
+
+.main-layouts {
+  @apply flex flex-col flex-1;
+  @apply items-center bg-gray-100;
+}
+
+.main-layouts .container {
+  @apply flex flex-row border;
+  @apply w-[85%] h-[100%] py-[8px] my-[10px];
+  @apply overflow-hidden rounded-[15px] bg-[#FFF];
+}
+
+.main-layouts .container > div:nth-child(2) {
+  @apply flex flex-col flex-1;
+}
+
+@media (max-width: 768px) {
+  .main-layouts .container {
+    @apply border-none;
+    @apply w-[100%] py-[0px] my-[0px];
+    @apply flex-col-reverse rounded-[0px];
+  }
+}
+
+@media (min-width: 768px) {
+  .main-layouts .container > div:nth-child(1) {
+    @apply flex flex-col border-r;
+    @apply w-[230px] min-w-[230px];
+  }
+}
+
+/* /////////////////////////////////////////// */
+
+.toolbar-layouts {
+  @apply flex flex-row w-[100%];
+  @apply justify-center bg-[#000];
+}
+
+.toolbar-layouts > div {
+  @apply flex flex-row;
+  @apply w-[85%] h-[100%];
+}
+
+.toolbar-layouts .app-label {
+  @apply flex items-center font-extrabold;
+  @apply text-[#FFF] text-[18px] tracking-[3px];
+}
+
+.toolbar-layouts .user-block {
+  @apply flex items-center; 
+  @apply h-[100%] px-[10px] cursor-pointer;
+}
+
+.toolbar-layouts .user-block:hover {
+@apply bg-[rgba(255,255,255,0.15)];
+}
+
+.toolbar-layouts .user-label {
+  @apply h-[max-content] ml-[10px] font-medium;
+  @apply text-[#FFF] text-[14px] tracking-[1px]; 
+}
+
+@media (max-width: 768px) { .toolbar-layouts > div { @apply w-[95%]; } }
+
+/* /////////////////////////////////////////// */
+
+.menu-layouts {
+  @apply flex flex-col;
+  @apply flex-1 px-[16px];
+}
+
+.menu-layouts > div {
+  @apply w-[100%] h-[100%];
+}
+
+.menu-layouts .row {
+  @apply flex items-center p-[8px] my-[2px];
+  @apply cursor-pointer border border-transparent;
+}
+
+.menu-layouts .row[data-select="true"] {
+  @apply rounded-[10px];
+  @apply bg-gray-100 border-gray-200;
+}
+
+.menu-layouts .row > div:nth-child(1) {
+  @apply flex w-[max-content] h-[max-content];
+  @apply first:text-[19px] first:stroke-[1.8px];
+}
+
+.menu-layouts .row > div:nth-child(2) {
+  @apply flex w-[max-content] h-[max-content];
+  @apply text-[13px] tracking-[1px] ml-[4px] font-medium;
+}
+
+@media (max-width: 768px) {
+  .menu-layouts {
+    @apply flex-none;
+    @apply w-[100%] h-[50px] py-[4px] px-[4px];
+    box-shadow: 0 -2px 6px 2px rgba(0,0,0,0.06);
+  }
+
+  .menu-layouts > div {
+    @apply flex flex-row;
+    @apply mx-[auto] max-w-[420px];
+  }
+
+  .menu-layouts .row {
+    @apply w-[100%] mx-[20px];
+    @apply items-center justify-center;
+  }
+
+  .menu-layouts .row > div:nth-child(2) {
+    @apply hidden;
+  }
+}
+
+/* /////////////////////////////////////////// */
+
+.menu-popover {
+
+}
+
+.menu-popover > div[tabindex="-1"] {
+  @apply shadow-lg visible;
+  @apply mt-[5px] p-[10px] rounded-[10px];
+}
+
+.menu-popover .row {
+  @apply cursor-pointer px-[5px];
+  @apply flex flex-row items-center;
+}
+
+.menu-popover .icon {
+  @apply h-[max-content];
+}
+
+.menu-popover .label {
+  color: primary;
+  @apply text-[14px] font-normal;
+  @apply tracking-[0.7px] px-[8px];
+}
+
+.menu-popover .icon > svg {
+  color: primary;
+  @apply text-[18px];
+}
+
+.menu-popover .row:hover > .icon > svg {
+  color: accent;
+}
+
+/* /////////////////////////////////////////// */

@@ -1,0 +1,71 @@
+/* /////////////////////////////////////////// */
+
+.mui-scrollbar {
+
+}
+
+.mui-scrollbar-container {
+  @apply z-[0] relative;
+  @apply flex flex-col flex-1;
+}
+
+/* /////////////////////////////////////////// */
+
+.content {
+  @apply flex flex-col;
+  @apply w-[100%] h-[100%];
+}
+
+.scroller {
+  @apply absolute;
+}
+
+.wrapper {
+  @apply z-[0] absolute right-[0px];
+}
+
+/* /////////////////////////////////////////// */
+
+.track-x {
+  @apply z-[1] relative;
+  @apply w-[100%] h-[5px];
+  @apply left-[0px] bottom-[2px];
+  @apply bg-transparent rounded-[0px];
+}
+
+.track-x::after {
+  content: '';
+  @apply z-[-1] absolute;
+  @apply w-[100%] h-[auto];
+  @apply left-[0px] bottom-[2px];
+  @apply border-b-[1px] border-[#E8E8E8];
+}
+
+.track-x > div {
+  @apply bg-[#F2F2F2] rounded-[3px] !important;
+  @apply border-[1px] border-[#D7D7D7] !important;
+}
+
+/* /////////////////////////////////////////// */
+
+.track-y {
+  @apply z-[1] relative;
+  @apply w-[5px] h-[100%];
+  @apply top-[0px] right-[2px];
+  @apply bg-transparent rounded-[0px];
+}
+
+.track-y::after {
+  content: '';
+  @apply z-[-1] absolute;
+  @apply w-[auto] h-[100%];
+  @apply left-[2px] top-[0px];
+  @apply border-l-[1px] border-[#E8E8E8];
+}
+
+.track-y > div {
+  @apply bg-[#F2F2F2] rounded-[3px] !important;
+  @apply border-[1px] border-[#D7D7D7] !important;
+}
+
+/* /////////////////////////////////////////// */

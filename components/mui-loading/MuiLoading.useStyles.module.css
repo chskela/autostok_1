@@ -1,0 +1,17 @@
+/* /////////////////////////////////////////// */
+
+.mui-loading {
+  @apply flex flex-row;
+  @apply z-[1] absolute inset-0;
+  @apply items-center justify-center;
+}
+
+/* /////////////////////////////////////////// */
+
+.mui-loading > .circular-progress {
+  @apply flex flex-row;
+  @apply p-[20px] bg-[#FFF] rounded-[50%];
+  box-shadow: 2px 3px 30px rgba(0,0,0,0.1);
+}
+
+/* /////////////////////////////////////////// */

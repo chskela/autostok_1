@@ -1,0 +1,46 @@
+/* /////////////////////////////////////////// */
+
+.modal {
+
+}
+
+/* /////////////////////////////////////////// */
+
+.modal .header {
+  @apply flex flex-row;
+  @apply items-center mx-[auto];
+  @apply relative h-[45px] min-h-[45px] w-[calc(100%-40px)];
+}
+
+.modal .header::after {
+  content: '';
+  @apply absolute;
+  @apply w-[100%] border-b;
+  @apply left-[0px] bottom-[0px];
+}
+
+.modal .header > .label {
+  @apply overflow-ellipsis;
+  @apply text-[15px] text-[#1E1E1E];
+  @apply overflow-hidden whitespace-nowrap;
+  @apply font-bold uppercase tracking-[1px];
+}
+
+.modal .header > .close {
+  @apply ml-[auto] cursor-pointer;
+}
+
+.modal .header > .close > svg {
+  @apply text-[#1E1E1E];
+  @apply text-[20px] stroke-[1.5px];
+}
+
+/* /////////////////////////////////////////// */
+
+.modal .footer {
+  @apply flex flex-row;
+  @apply items-center mx-[auto] mb-[10px];
+  @apply relative h-[45px] w-[calc(100%-40px)];
+}
+
+/* /////////////////////////////////////////// */

@@ -1,0 +1,16 @@
+
+/* /////////////////////////////////////////// */
+
+.mui-modal {
+
+}
+
+.mui-modal > div:nth-child(1) {
+  @apply bg-[#000] bg-opacity-10;
+}
+
+.mui-modal > div:nth-child(3) > div {
+  @apply overflow-visible shadow-xl rounded-[15px];
+}
+
+/* /////////////////////////////////////////// */

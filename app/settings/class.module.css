@@ -1,0 +1,40 @@
+/* /////////////////////////////////////////// */
+
+.tabs {
+  @apply relative;
+  @apply w-[100%] mx-3;
+}
+
+.tabs::after {
+  content: '';
+  @apply absolute;
+  @apply w-[80%] border-b;
+  @apply left-[0px] bottom-[0px];
+}
+
+.avatar {
+  @apply max-w-[max-content];
+  @apply rounded-[50%] p-[8px];
+  border: 2px solid #000;
+  position: relative;
+}
+
+.avatar > canvas {
+  border-radius: 50%;
+}
+
+/* /////////////////////////////////////////// */
+
+.slider-block {
+  @apply flex flex-col;
+  @apply items-center justify-center;
+  @apply absolute h-[100%] top-[0px] right-[-35px];
+}
+
+.slider-block .slider {
+  @apply my-[20px];
+}
+
+.slider-block svg {
+  @apply text-[25px];
+}

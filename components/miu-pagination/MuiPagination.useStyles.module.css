@@ -1,0 +1,39 @@
+@value pagination-color from '@config/colors.module.css';
+@value pagination-border from '@config/colors.module.css';
+@value pagination-background from '@config/colors.module.css';
+@value pagination-background-active from '@config/colors.module.css';
+
+/* /////////////////////////////////////////// */
+
+.mui-pagination {
+  @apply border rounded-[8px];
+  border-color: pagination-border;
+  background-color: pagination-background;
+}
+
+/* /////////////////////////////////////////// */
+
+.item > span { 
+  @apply hidden;
+}
+.item:hover { 
+  @apply bg-transparent;
+}
+
+.item > svg { 
+  @apply stroke-[1.8px];
+  color: pagination-color;
+}
+
+.item {
+  color: pagination-color;
+  @apply w-[30px] h-[28px];
+  @apply min-w-[30px] min-h-[28px] font-medium;
+  @apply p-[0px] m-[0px] text-[12px] rounded-[0px];
+}
+
+.item[data-select="true"] {
+  background-color: pagination-background-active;
+}
+
+/* /////////////////////////////////////////// */

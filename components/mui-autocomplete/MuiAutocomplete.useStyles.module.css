@@ -1,0 +1,112 @@
+@value accent from '@config/colors.module.css';
+@value input-option-label from '@config/colors.module.css';
+@value input-option-sub-label from '@config/colors.module.css';
+
+/* /////////////////////////////////////////// */
+
+.mui-autocomplete {
+
+}
+
+/* /////////////////////////////////////////// */
+
+.input-button {
+  @apply p-[0px] mr-[6px] mt-[0px];
+  @apply min-w-[auto] rounded-[50%];
+}
+
+.input-button:hover { 
+  @apply bg-transparent;
+}
+
+.input-button > span > svg {
+  @apply text-[#1E1E1E] stroke-[1.5px];
+}
+
+/* /////////////////////////////////////////// */
+
+.highlight {
+  color: accent
+}
+
+/* /////////////////////////////////////////// */
+
+.option {
+  @apply w-[100%];
+  @apply p-[5px] pl-[10px];
+}
+
+.option[aria-selected="true"] {
+  @apply bg-transparent;
+}
+
+.option > div[data-role="label"] {
+  @apply text-[13px];
+  color: input-option-label;
+}
+
+.option > div[data-role="sub-label"] {
+  @apply text-[11px] mt-[2px];
+  color: input-option-sub-label;
+}
+
+.option[data-focus="true"], .option:hover:not(div) {
+  @apply bg-[rgba(0,0,0,0.03)];
+}
+
+/* /////////////////////////////////////////// */
+
+.options-paper {
+  @apply overflow-hidden;
+  @apply mt-[10px] rounded-[5px];
+  box-shadow: 2px 2px 20px 0px rgba(0,0,0,0.15);
+}
+
+.options-paper ul, .options-paper ul li {
+  @apply p-[0px];
+}
+
+/* /////////////////////////////////////////// */
+
+.options-scrollbar div[data-role="track-y"] {
+  height: calc(100% - 10px);
+  @apply top-[5px] right-[5px];
+}
+
+.options-scrollbar div[data-role="wrapper"] {
+  @apply relative;
+}
+
+.options-scrollbar div[data-role="scroller"] {
+  @apply relative max-w-[none] max-h-[200px];
+}
+
+.options-scrollbar div[data-role="scroller"] ul {
+  @apply overflow-hidden;
+}
+
+/* /////////////////////////////////////////// */
+
+.no-options-paper {
+  @apply p-[5px];
+}
+
+/* /////////////////////////////////////////// */
+
+.options-skeleton {
+  @apply flex flex-col my-[10px];
+}
+
+.options-skeleton > span:nth-child(2) { 
+  @apply mt-[10px];
+}
+
+.skeleton {
+  @apply transform-none bg-[rgba(0,0,0,0.1)];
+}
+
+.skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent);
+}
+
+/* /////////////////////////////////////////// */
