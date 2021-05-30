@@ -1,0 +1,113 @@
+.scroll > div > div > div > div {
+  @apply divide-y;
+}
+
+.message {
+  @apply bg-[#EDEEF0] w-max p-5 rounded-2xl relative mx-16 my-5 max-w-sm;
+}
+
+.message::after {
+  content: ''; 
+  position: absolute; 
+  bottom: 0;
+  border: 30px solid transparent; 
+  border-bottom: 20px solid #EDEEF0;
+}
+
+.message-left {
+  @apply self-start;
+}
+.message-left::after {
+  left: -30px;
+}
+
+.message-right {
+  @apply self-end;
+
+}
+.message-right::after {
+  right: -30px;
+}
+
+.message-notlast::after {
+  content: none;
+}
+
+.avatar {
+  @apply w-10 h-10 rounded-full border-2 border-white overflow-hidden flex-none absolute -top-4 bg-[#EDEEF0];
+}
+
+.avatar-left {
+  @apply -right-4;
+}
+
+.avatar-right {
+  @apply -left-4;
+}
+
+.company {
+  @apply absolute -top-1.5 text-[9px] text-[#1E1E1E] font-bold uppercase;
+}
+
+.company-left {
+  @apply right-8;
+}
+
+.company-right {
+  @apply left-8 text-[#006FFF];
+}
+
+.time {
+  @apply absolute  text-[9px] text-[#1E1E1E] z-10;
+}
+.time-left {
+  @apply left-4 -top-1;
+}
+
+.time-right {
+  @apply  right-4 bottom-1;
+}
+
+.input {
+  @apply relative h-14 min-h-0 mx-[150px] mb-8 overflow-hidden;
+}
+
+
+.textinput {
+  @apply absolute; 
+}
+
+.textinput > div {
+@apply mt-0 rounded-full border py-[9px] !important;
+}
+
+.textinput input {
+@apply pl-12;
+}
+
+.button {
+ @apply rounded-full border bg-[#EDEEF0] absolute right-2 top-2;
+}
+
+.button div {
+ @apply flex-row space-x-1 !important;
+}
+
+.icon {
+  @apply absolute top-2 left-2 p-2.5 rounded-full border bg-[#EDEEF0] min-w-0;
+}
+
+.icon div div[data-role="icon"] {
+  @apply mr-0 !important;
+}
+
+.dropzone {
+    border-width: 2px;
+    border-radius: 2px;
+    border-color: #eeeeee;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #bdbdbd;
+    outline: none;
+    transition: border .24s ease-in-out;
+}

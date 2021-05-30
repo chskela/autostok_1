@@ -11,7 +11,7 @@ export { FiGitlab as GitIcon } from 'react-icons/fi';
 export { FiLogOut as LogOutIcon } from 'react-icons/fi';
 export { FiSettings as SettingsIcon } from 'react-icons/fi';
 export { FiXCircle as CloseCircleIcon } from 'react-icons/fi';
-export { FiGitPullRequest as PullRequestIcon} from 'react-icons/fi';
+export { FiGitPullRequest as PullRequestIcon } from 'react-icons/fi';
 
 
 export { FiZoomIn as ZoomInIcon } from 'react-icons/fi';
@@ -22,3 +22,4 @@ export { FiPlusCircle as PlusCircleIcon } from 'react-icons/fi';
 
 
 export { default as BrakeIcon } from '@public/icons/brake.svg';
+export { default as ArrowIcon } from '@public/icons/arrow.svg';
