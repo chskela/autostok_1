@@ -5,7 +5,7 @@
     "dev": "next",
     "type-check": "tsc",
     "start": "next start",
-    "build": "npm run delete-next && next build",
+    "build": "next build",
     "delete-next": "if exist .\\.next rd /Q /S .\\.next",
     "delete-build": "if exist .\\build rd /Q /S .\\build",
     "nginx": "npm run nginx-delete && npm run nginx-copy",
