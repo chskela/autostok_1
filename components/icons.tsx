@@ -13,13 +13,12 @@ export { FiSettings as SettingsIcon } from 'react-icons/fi';
 export { FiXCircle as CloseCircleIcon } from 'react-icons/fi';
 export { FiGitPullRequest as PullRequestIcon } from 'react-icons/fi';
 
-
 export { FiZoomIn as ZoomInIcon } from 'react-icons/fi';
 export { FiZoomOut as ZoomOutIcon } from 'react-icons/fi';
 
 export { FiPaperclip as PaperclipIcon } from 'react-icons/fi';
 export { FiPlusCircle as PlusCircleIcon } from 'react-icons/fi';
-
+export { FiNavigation2 as Navigation2 } from 'react-icons/fi';
 
 export { default as BrakeIcon } from '@public/icons/brake.svg';
-export { default as ArrowIcon } from '@public/icons/arrow.svg';
+

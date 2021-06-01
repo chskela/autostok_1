@@ -1,24 +1,133 @@
-.scroll > div > div > div > div {
-  @apply divide-y;
+@value accent from '@config/colors.module.css';
+@value primary from '@config/colors.module.css';
+@value button-border from '@config/colors.module.css';
+
+/* /////////////////////////////////////////// */
+
+.container {
+  @apply flex flex-col flex-1;
+}
+
+.row {
+  @apply flex flex-row flex-1;
+}
+
+/* /////////////////////////////////////////// */
+
+.direct {
+  @apply flex flex-col w-[400px] h-[100%] border-r-[1px];
+}
+
+.direct-title {
+  @apply text-[21px] font-medium ml-[14px];
+}
+
+/* /////////////////////////////////////////// */
+
+.direct-item {
+  @apply flex flex-row flex-initial relative;
+  @apply justify-between items-center px-[20px] py-[15px];
+}
+
+.direct-item:hover {
+  @apply bg-[#F3F4F6];
+}
+
+.direct-item::before {
+  content:"";
+  position: absolute;
+  right: 5%;
+  bottom:0;
+  left: 5%;
+  height:1px;
+  background-color: button-border  ;
+}
+
+.direct-item:last-child:before {
+  content:none;
+}
+
+/* /////////////////////////////////////////// */
+
+.img-wrapper {
+  @apply w-[60px] h-[60px] rounded-full;
+  @apply flex border border-black  flex-none;
+}
+
+.img {
+  @apply w-auto h-full object-cover;
+}
+
+.img-border {
+  @apply w-[56px] h-[56px] border-[2px] m-auto;
+  @apply border-white rounded-full overflow-hidden;
+}
+
+.img-placeholder{
+  @apply w-[50px] h-[50px] rounded-[50%] border-[5px] m-auto;
+  border-color: accent;
+}
+
+/* /////////////////////////////////////////// */
+
+.content-wrapper {
+  @apply ml-[17px] flex-1 overflow-hidden;
+}
+
+.meta {
+  @apply flex flex-row justify-between;
+}
+
+.meta-company {
+  @apply text-[9px] font-bold uppercase;
+  color: accent;
+}
+
+.meta-date {
+  @apply text-[9px];
+  color: primary;
+}
+
+/* /////////////////////////////////////////// */
+
+.part {
+  @apply text-[16px] font-bold;
+}
+
+.last-message {
+  @apply text-[10px] overflow-hidden;
+  @apply overflow-ellipsis whitespace-nowrap;
+  color: primary;
+}
+
+.direct-button {
+  @apply mb-[30px] max-w-[158px] m-auto;
+}
+
+/* /////////////////////////////////////////// */
+
+.messages {
+  @apply flex flex-col flex-1 relative my-[10px];
 }
 
 .message {
-  @apply bg-[#EDEEF0] w-max p-5 rounded-2xl relative mx-16 my-5 max-w-sm;
+  @apply bg-[#EDEEF0] px-[20px] py-[17px] rounded-[14px];
+  @apply relative mx-16 my-5 max-w-[370px] min-w-[130px];
 }
 
 .message::after {
   content: ''; 
   position: absolute; 
   bottom: 0;
-  border: 30px solid transparent; 
-  border-bottom: 20px solid #EDEEF0;
+  border: 24px solid transparent; 
+  border-bottom: 16px solid #EDEEF0;
 }
 
 .message-left {
   @apply self-start;
 }
 .message-left::after {
-  left: -30px;
+  left: -24px;
 }
 
 .message-right {
@@ -26,15 +135,18 @@
 
 }
 .message-right::after {
-  right: -30px;
+  right: -24px;
 }
 
-.message-notlast::after {
+.message-islast::after {
   content: none;
 }
 
+/* /////////////////////////////////////////// */
+
 .avatar {
-  @apply w-10 h-10 rounded-full border-2 border-white overflow-hidden flex-none absolute -top-4 bg-[#EDEEF0];
+  @apply w-[35px] h-[35px] rounded-full border-[2px];
+  @apply border-white overflow-hidden flex-none absolute -top-4;
 }
 
 .avatar-left {
@@ -44,6 +156,13 @@
 .avatar-right {
   @apply -left-4;
 }
+
+.avatar-placeholder{
+  @apply w-[30px] h-[30px] rounded-[50%] border-[5px] m-auto bg-white;
+  border-color: accent;
+}
+
+/* /////////////////////////////////////////// */
 
 .company {
   @apply absolute -top-1.5 text-[9px] text-[#1E1E1E] font-bold uppercase;
@@ -57,19 +176,24 @@
   @apply left-8 text-[#006FFF];
 }
 
+/* /////////////////////////////////////////// */
+
 .time {
-  @apply absolute  text-[9px] text-[#1E1E1E] z-10;
+  @apply absolute text-[9px] z-10;
+  color: primary;
 }
 .time-left {
-  @apply left-4 -top-1;
+  @apply left-3.5 -top-1.5;
 }
 
 .time-right {
-  @apply  right-4 bottom-1;
+  @apply right-4 bottom-1;
 }
 
+/* /////////////////////////////////////////// */
+
 .input {
-  @apply relative h-14 min-h-0 mx-[150px] mb-8 overflow-hidden;
+  @apply relative h-[45px] mx-[150px] mb-[16px] mt-[30px] overflow-hidden;
 }
 
 .textinput {
@@ -77,36 +201,47 @@
 }
 
 .textinput > div {
-@apply mt-0 rounded-full border py-[9px] !important;
+  @apply mt-0 rounded-full border py-[7px] !important;
 }
 
 .textinput input {
-@apply pl-12;
+  @apply pl-[45px];
 }
 
+/* /////////////////////////////////////////// */
+
 .button {
- @apply rounded-full border bg-[#EDEEF0] absolute right-2 top-2;
+  @apply rounded-full border bg-[#EDEEF0] absolute right-1.5 top-1.5 ;
 }
 
 .button div {
- @apply flex-row space-x-1 !important;
+  @apply flex-row space-x-1 !important;
 }
+
+.button svg {
+  @apply transform rotate-90 scale-x-[1.5] scale-y-[1.2];
+}
+
+/* /////////////////////////////////////////// */
 
 .icon {
-  @apply absolute top-2 left-2 p-2.5 rounded-full border bg-[#EDEEF0] min-w-0;
+  @apply absolute top-1.5 left-1.5 p-[8px];
+  @apply rounded-full border bg-[#EDEEF0] min-w-0;
 }
 
-.icon div div[data-role="icon"] {
-  @apply mr-0 !important;
+.icon div[data-role="icon"] {
+  @apply mr-[0px] !important;
 }
+
+/* /////////////////////////////////////////// */
 
 .dropzone {
-    border-width: 2px;
-    border-radius: 2px;
-    border-color: #eeeeee;
-    border-style: dashed;
-    background-color: #fafafa;
-    color: #bdbdbd;
-    outline: none;
-    transition: border .24s ease-in-out;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: #eeeeee;
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border .24s ease-in-out;
 }
