@@ -25,8 +25,8 @@
 /* /////////////////////////////////////////// */
 
 .direct-item {
-  @apply flex flex-row flex-initial relative;
   @apply justify-between items-center px-[20px] py-[15px];
+  @apply flex flex-row flex-initial relative cursor-pointer;
 }
 
 .direct-item:hover {
@@ -107,7 +107,7 @@
 /* /////////////////////////////////////////// */
 
 .messages {
-  @apply flex flex-col flex-1 relative my-[10px];
+  @apply flex flex-col flex-1 relative mb-[10px] mt-[30px];
 }
 
 .message {
