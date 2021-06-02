@@ -11,9 +11,11 @@ import { MuiTextField, MuiButton } from '@components/core';
 import { PaperclipIcon, Navigation2 } from '@components/icons';
 
 import moment from 'moment';
+import arrayMove from 'array-move';
 import { RootStore } from '@store/RootStore';
 import { useDropzone } from 'react-dropzone';
 import { applySnapshot } from 'mobx-state-tree';
+import SortableList, { SortableItem } from 'react-easy-sort';
 
 import { DirectList } from '@models/direct/DirectList';
 import { DirectTypingModel } from '@models/direct/DirectModel';
@@ -22,12 +24,16 @@ import { DirectMessagesList } from '@models/direct/DirectList';
 export const PageDirect = observer((props) => {
   const router = useRouter();
   const [model] = React.useState(DirectTypingModel.create());
+  const onDrop = React.useCallback(files => { model.addStorage(files)}, []);
   const [direct] = React.useState(DirectList.create({ ...props['direct'] }));
   React.useEffect(() => {applySnapshot(direct, { ...props['direct'] })}, [props]);
   React.useEffect(() => {applySnapshot(messages, { ...props['messages'] })}, [props]);
   const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
-  const {open, getRootProps, getInputProps, isDragAccept} = useDropzone({noClick: true, noKeyboard: true});
-
+  const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
+  });
+  const onSortEnd = (from: number, to: number) => {model.changeControl('images', arrayMove(model['storage'], from, to))};
+  
   return (
     <div className={styles['container']}>
       <div className={styles['row']}>
@@ -40,6 +46,7 @@ export const PageDirect = observer((props) => {
             {direct['response'].map((row, index) => {
               const onClick = () => Router.push({pathname: router['pathname'], query: {select: row['id']}});
               const image = row['reception_parts'].getPreview();
+
               return (
                 <div key={index} onClick={onClick} className={styles['direct-item']}>
                   
@@ -67,7 +74,7 @@ export const PageDirect = observer((props) => {
                     </div>
 
                     <div className={styles['last-message']}>
-                      {`Вы: ${row['message']['content']}`}
+                      {row['message']['content'] ? `Вы: ${row['message']['content']}` : 'В последнем сообщении только картинки.'}
                     </div>
 
                   </div>
@@ -78,8 +85,10 @@ export const PageDirect = observer((props) => {
           </MuiScrollbar>
           <MuiButton
             label={'Загрузить еще'}
+            loading={model['isFetching']}
             className={styles['direct-button']}
-            onClick={async () => {}}
+            // При клике дублирует директы!!!!!
+            onClick={() => direct.loadMoreModel({})}
           />
         </div>
         
@@ -98,9 +107,20 @@ export const PageDirect = observer((props) => {
               const classMessage = Clsx(styles['message'], {[styles['message-right']]: isUser, [styles['message-left']]: !isUser, [styles['message-islast']]: !isLast});
 
               return (
+                
                 <div key={index} data-sender={isUser} className={classMessage}>
-
-                  {row['content']}
+                
+                  {row['storage']['length'] > 0 ? 
+                    <div className={styles['thumbs-container']}>
+                      {row['storage'].map((file, i) => (
+                        <div className={Clsx(styles[`thumb-${i}`], styles['thumb'])} key={file['file_id']}>
+                          <img src={file['public_url']} className={styles['img-previews']}/>
+                        </div>
+                      ))}
+                    </div>
+                    : null}
+                  
+                  <div>{row['content']}</div>
 
                   <div className={classAvatar}>
                     {image ? <img src={image} className={styles['img']}/> : <div className={styles['avatar-placeholder']}></div>}
@@ -140,22 +160,39 @@ export const PageDirect = observer((props) => {
               icon={<Navigation2 size={'16px'}/>}
               className={styles['button']}
               onClick={async () => {
+                if (!model['content'] && model['storage']['length'] === 0) return;
+                
                 model['direct'].changeControl('id', router['query']['select'])
                 const response = await model.createModel();
+
                 if (response['status'] === 200) {
                   model.changeControl('content', null);
+                  model.changeControl('storage', []);
                   await Router.push({ pathname: router['pathname'], query: { ...router['query'] } });
                 }
               }}
             />
 
           </div>
-          <div {...getRootProps({
-              className: isDragAccept
-                ? `${styles['dropzone']} absolute left-36 right-36 top-96 bottom-32`
-                : 'absolute left-36 right-36 top-96 bottom-32 ',
-            })}
-          >
+
+          <div {...getRootProps({ className: `${styles['dropzone']} + ${isDragActive ? styles['dropzone-active'] : ''}` })}>
+            
+            {model['storage']['length'] ? (
+              <SortableList onSortEnd={onSortEnd} className={Clsx(styles['thumbs-container'], styles['thumbs'])}>
+
+                {model['storage'].map((file, i) => (
+                  <SortableItem key={file['file_id']}>
+
+                    <div className={Clsx(styles[`thumb-${i}`], styles['thumb'])} >
+                      <img src={file['public_url']} className={styles['img-previews']}/>
+                    </div>
+
+                  </SortableItem>
+                ))}
+
+              </SortableList>
+            ) : null}
+
           </div>
         </div>
       </div>
