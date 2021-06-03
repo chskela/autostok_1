@@ -51,7 +51,7 @@
 
 .img-wrapper {
   @apply w-[60px] h-[60px] rounded-full;
-  @apply flex border border-black  flex-none;
+  @apply flex border border-black flex-none;
 }
 
 .img {
@@ -64,7 +64,7 @@
 }
 
 .img-placeholder{
-  @apply w-[50px] h-[50px] rounded-[50%] border-[5px] m-auto;
+  @apply w-[52px] h-[52px] rounded-[50%] border-[5px] m-auto;
   border-color: accent;
 }
 
@@ -111,7 +111,7 @@
 }
 
 .message {
-  @apply bg-[#EDEEF0] px-[20px] py-[17px] rounded-[14px];
+  @apply bg-[#EDEEF0] px-[20px] py-[17px] rounded-[12px];
   @apply relative mx-[50px] my-[20px] max-w-[370px] min-w-[130px];
 }
 
@@ -141,6 +141,12 @@
 .message-islast::after {
   content: none;
 }
+
+.message-content {
+  @apply pt-[10px];
+  
+}
+
 
 /* /////////////////////////////////////////// */
 
@@ -258,12 +264,13 @@
 
 .thumbs-container {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(5, auto);
-  grid-gap: 12px;
+  grid-template-columns: auto-fit;
+  grid-template-rows: auto-fit;
+  grid-gap: 10px;
   margin: auto;
   background-color: #EDEEF0;
   @apply overflow-hidden;
+  min-height: fit-content;
 }
 
 .thumbs {
@@ -271,33 +278,37 @@
 }
 
 .thumb {
-  @apply rounded-[15px];
+  @apply rounded-[12px];
   @apply overflow-hidden;
 }
 
 .thumb-0 {
   grid-column: 1 / span 3;
-  grid-row: 1 / span 3; 
+  grid-row: 1 / span 3;
 }
 
 .thumb-1 {
   grid-column: 4 / span 3;
   grid-row: 1 / span 3;
+
 }
 
 .thumb-2 {
   grid-column: 1 / span 2;
   grid-row: 4 / span 2;
+
 }
 
 .thumb-3 {
   grid-column: 3 / span 2;
   grid-row: 4 / span 2;
+
 }
 
 .thumb-4 {
   grid-column: 5 / span 2;
   grid-row: 4 / span 2;
+
 }
 
 .img-previews  {
@@ -305,3 +316,37 @@
   height: 100%;
   object-fit: cover;
 };
+
+/* /////////////////////////////////////////// */
+
+.slideshow {
+  @apply flex flex-col;
+  @apply items-center h-[100%]; 
+}
+
+.slideshow > .images {
+  @apply relative cursor-pointer;
+  @apply rounded-[20px] overflow-hidden;
+}
+
+.slideshow > .images > img {
+  @apply absolute;
+  @apply top-0 left-0;
+  @apply w-[100%] h-[100%];
+  @apply object-cover opacity-0 duration-[0.2s];
+}
+
+.slideshow .images > img:first-child {
+  @apply opacity-100;
+}
+
+.slideshow .thumbnails {
+  @apply flex  flex-row mt-[10px];
+}
+
+.slideshow .thumbnails > div {
+  @apply w-[100%] h-[3px] mx-[4px];
+  @apply rounded-[3px] bg-[#CCCCCC];
+}
+
+/* /////////////////////////////////////////// */

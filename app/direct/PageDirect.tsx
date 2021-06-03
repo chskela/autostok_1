@@ -20,6 +20,7 @@ import SortableList, { SortableItem } from 'react-easy-sort';
 import { DirectList } from '@models/direct/DirectList';
 import { DirectTypingModel } from '@models/direct/DirectModel';
 import { DirectMessagesList } from '@models/direct/DirectList';
+import { PageDirectModal } from './PageDirectModal';
 
 export const PageDirect = observer((props) => {
   const router = useRouter();
@@ -32,7 +33,7 @@ export const PageDirect = observer((props) => {
   const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
   });
-  const onSortEnd = (from: number, to: number) => {model.changeControl('images', arrayMove(model['storage'], from, to))};
+  const onSortEnd = (from: number, to: number) => {model.changeControl('storage', arrayMove(model['storage'], from, to))};
   
   return (
     <div className={styles['container']}>
@@ -94,24 +95,27 @@ export const PageDirect = observer((props) => {
         
         <div className={styles['messages']}>
 
-          <MuiScrollbar ref={ref => {ref && ref.scrollToBottom()}}>
+          <MuiScrollbar ref={ref => {ref &&  setTimeout(() => {ref.scrollToBottom()}, 0)}}>
 
             {messages['response'].map((row, index) => {
-
+              
               const image = row['sender'].getPreview();
+              const { select } = router['query'];
               const isUser = RootStore['session']['user']['id'] === row['sender']['id'];
               const isLast = row['sender']['id'] !== messages['response'][index + 1]?.['sender']['id'];
               const classTime = Clsx(styles['time'], {[styles['time-right']]: isUser, [styles['time-left']]: !isUser});
               const classAvatar = Clsx(styles['avatar'], {[styles['avatar-right']]: isUser, [styles['avatar-left']]: !isUser});
+              const onClick = () => Router.push({pathname: router['pathname'], query: {select, id: row['id']}}, null, {shallow: true})
               const classCompany = Clsx(styles['company'], {[styles['company-right']]: isUser, [styles['company-left']]: !isUser});
               const classMessage = Clsx(styles['message'], {[styles['message-right']]: isUser, [styles['message-left']]: !isUser, [styles['message-islast']]: !isLast});
-
+              
               return (
-                
                 <div key={index} data-sender={isUser} className={classMessage}>
                 
                   {row['storage']['length'] > 0 ? 
-                    <div className={styles['thumbs-container']}>
+                    <div className={styles['thumbs-container']}
+                    onClick={()=>onClick()}
+                    >
                       {row['storage'].map((file, i) => (
                         <div className={Clsx(styles[`thumb-${i}`], styles['thumb'])} key={file['file_id']}>
                           <img src={file['public_url']} className={styles['img-previews']}/>
@@ -120,7 +124,7 @@ export const PageDirect = observer((props) => {
                     </div>
                     : null}
                   
-                  <div>{row['content']}</div>
+                  <div className={styles['message-content']}>{row['content']}</div>
 
                   <div className={classAvatar}>
                     {image ? <img src={image} className={styles['img']}/> : <div className={styles['avatar-placeholder']}></div>}
@@ -196,6 +200,7 @@ export const PageDirect = observer((props) => {
           </div>
         </div>
       </div>
+      <PageDirectModal messages={props['messages']}/>
     </div>
   );
 });
