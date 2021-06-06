@@ -1,0 +1,147 @@
+@value accent from '@config/colors.module.css';
+@value primary from '@config/colors.module.css';
+
+/* /////////////////////////////////////////// */
+
+.slideshow {
+  @apply flex flex-col;
+  @apply items-center h-[100%]; 
+}
+
+.slideshow > .images {
+  @apply relative cursor-pointer;
+  @apply rounded-[20px] overflow-hidden;
+}
+
+.slideshow > .images > img {
+  @apply absolute;
+  @apply top-0 left-0;
+  @apply w-[100%] h-[100%];
+  @apply object-cover opacity-0 duration-[0.2s];
+}
+
+.slideshow .images > img:first-child {
+  @apply opacity-100;
+}
+
+.slideshow .thumbnails {
+  @apply flex  flex-row mt-[10px];
+}
+
+.slideshow .thumbnails > div {
+  @apply w-[100%] h-[3px] mx-[4px];
+  @apply rounded-[3px] bg-[#CCCCCC];
+}
+
+/* /////////////////////////////////////////// */
+
+.autocomplete button {
+  @apply hidden;
+}
+.autocomplete *, .text-field * {
+  @apply cursor-default;
+}
+
+/* /////////////////////////////////////////// */
+
+.grid {
+  @apply my-4 px-3;
+}
+
+.grid:nth-child(2n) > div:last-child {
+  @apply justify-items-start;
+  @apply w-[430px] min-w-[430px];
+}
+
+.grid:nth-child(2n+1) > div:first-child {
+  @apply justify-items-start;
+  @apply w-[430px] min-w-[430px];
+}
+
+/* /////////////////////////////////////////// */
+
+.row-publications {
+  @apply flex flex-col;
+  @apply w-[100%] h-[170px] cursor-pointer;
+  @apply min-h-[170px] rounded-[12px] border mx-2;
+}
+
+.row-publications .img-skeleton {
+  @apply w-[100%] h-[100%];
+  @apply rounded-[12px] bg-gray-100;
+}
+
+.row-publications .img-skeleton::after {
+  background: linear-gradient(90deg, transparent, #E5E7EB, transparent);
+}
+
+.row-publications div.img {
+  @apply w-[160px] h-[155px];
+  @apply px-3 py-2 overflow-hidden;
+  @apply min-w-[160px] min-h-[155px];
+}
+
+.row-publications div.img > img {
+  @apply w-[100%] h-[100%];
+  @apply border border-gray-300;
+  @apply object-cover rounded-[12px];
+}
+
+.row-publications > .label {
+  @apply w-max;
+  @apply text-[15px] text-[#1E1E1E];
+  @apply px-[10px] mt-[-10px] ml-[15px];
+  @apply font-bold tracking-[1px] bg-[#FFF];
+}
+
+.row-publications:hover {
+  @apply bg-gray-50 border-gray-300;
+}
+
+.row-publications:hover > .label{
+  color: accent;
+}
+
+.row-publications .description {
+  @apply flex flex-col;
+  @apply flex-1 p-3 h-[100%] w-[0px];
+}
+
+.row-publications .description .car {
+  color: primary;
+  @apply overflow-ellipsis;
+  @apply text-[15px] tracking-[0.7px];
+  @apply font-bold overflow-hidden whitespace-nowrap;
+}
+
+.row-publications .description .price {
+  color: primary;
+  @apply w-[100%] text-right;
+  @apply overflow-ellipsis ml-[auto];
+  @apply text-[17px] tracking-[0.7px] mt-[auto];
+  @apply font-bold overflow-hidden whitespace-nowrap;
+}
+
+.row-publications .description .address {
+  @apply overflow-ellipsis;
+  @apply text-[13px] text-[#1E1E1E] tracking-[1px];
+  @apply font-medium overflow-hidden whitespace-nowrap;
+}
+
+/* /////////////////////////////////////////// */
+
+.scrollbar div[data-role="track-y"] {
+  @apply right-[-3px];
+}
+
+.scrollbar div[data-role="track-y"]::after {
+  @apply hidden;
+}
+
+/* /////////////////////////////////////////// */
+
+.button-load-more {
+  @apply mx-[auto] my-[25px] w-[max-content];
+}
+
+/* /////////////////////////////////////////// */

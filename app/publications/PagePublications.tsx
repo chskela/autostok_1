@@ -13,26 +13,38 @@ import { CloseCircleIcon } from '@components/icons';
 import { MuiTextField, MuiAutocomplete } from '@components/core';
 
 import { getSnapshot, applySnapshot } from 'mobx-state-tree';
-import { DirectList } from '@models/direct/DirectList';
 import { ReceptionPartsModel } from '@models/storehouse/reception/parts/ReceptionPartsModel';
-import { DirectMessagesList } from '@models/direct/DirectList';
-import { DirectTypingModel } from '@models/direct/DirectModel';
 
-export const PageDirectModal = observer((props: any) => {
+export const PagePublications = observer((props: any) => {
   const router = useRouter();
-  const { select, id } = router['query'];
+  const id = router['query']['id'];
   const thumbnails = React.useRef(null);
   const [ loading, setLoading ] = React.useState(false);
-  React.useEffect(() => {applySnapshot(messages, { ...props['messages'] })}, [props]);
-  const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
-  React.useEffect(() => {Router['events'].on('routeChangeStart', ()=>setLoading(true))}, []);
-  React.useEffect(() => {setLoading(false); setTimeout(() => mouseMove(thumbnails, 'init'), 150)}, [id]);
-  const storage = messages['response'].reduce((acc, message) => message.id === id ? { ...message } : acc, {})['storage'];
-  
+  const [ model ] = React.useState(ReceptionPartsModel.create());
+
   const propsSlideshow: any = {
     onMouseMove: (event)=>mouseMove(thumbnails, event),
     onMouseLeave: (event)=>mouseMove(thumbnails, event),
   }
+
+  React.useEffect(() => {
+    const create = ReceptionPartsModel.create();
+    applySnapshot(model, {...getSnapshot(create)});
+  }, [id]);
+
+  React.useEffect(() => {
+    if(id && id !== 'create'){
+      setLoading(false);
+      model.changeControl('id', id);
+      setTimeout(() => model.getModel(), 0);
+      setTimeout(() => mouseMove(thumbnails, 'init'), 150);
+    }
+  }, [id]);
+
+
+  React.useEffect(() => {
+    Router['events'].on('routeChangeStart', ()=>setLoading(true));
+  }, []);
 
   const mouseMove = (thumbnails, event) => {
     const color = '#006FFF';
@@ -73,26 +85,73 @@ export const PageDirectModal = observer((props: any) => {
       }
     }
   }
-  
-  
-  return id ? (
-    <MuiModal {...ModalProps(props)} open={!!id} onClose={() => !loading && router.back()}>
+
+  return (
+    <MuiModal {...ModalProps(props)} open={!!id} onClose={()=>!loading && router.back()}>
       <div className={stylesModal['header']}>
-        <div className={stylesModal['close']} onClick={() => !loading && router.back()}><CloseCircleIcon /></div>
+        <div className={Clsx(stylesModal['label'], '!text-[19px]')}>{model['part_category']['label']}</div>
+        <div className={stylesModal['close']} onClick={()=>!loading && router.back()}><CloseCircleIcon/></div>
       </div>
-      <div className={'flex flex-row w-[530px] h-[550px] p-4'}>
+
+      <div className={'flex flex-row w-[1000px] h-[550px] p-4'}>
         <div className={Clsx(styles['slideshow'], 'w-[500px]')}>
           <div className={Clsx(styles['images'], 'w-[500px] h-[500px]')} {...propsSlideshow}>
-            {storage.map((row, index) => (
-              <img key={index} src={row['public_url']} />
+            {model['images'].map((row, index) => (
+              <img key={index} src={row['public_url']}/>
             ))}
           </div>
 
           <div ref={thumbnails} className={Clsx(styles['thumbnails'], 'w-[500px]')}>
-            {storage.map((row, index) => <div key={index} />)}
+            {model['images'].map((row, index) => <div key={index}/>)}
           </div>
+        </div>
+
+        <div className={'flex flex-col flex-1 px-4'}>
+          <MuiAutocomplete
+            readOnly={true}
+            label={'Запчасть'}
+            optionLabel={'label'}
+            value={model['part_category']}
+            className={styles['autocomplete']}
+            options={model['part_category']['suggests']}
+            component={model['part_category']['component']}
+            onChange={(value)=>model['part_category'].selectControl(value)}
+            onInputChange={(value)=>model['part_category'].setSuggests(value)}
+          />
+
+          <MuiAutocomplete
+            readOnly={true}
+            value={model['car']}
+            optionLabel={'label'}
+            optionSubLabel={'sub_label'}
+            label={'Транспортное средство'}
+            className={styles['autocomplete']}
+            options={model['car']['suggests']}
+            component={model['car']['component']}
+            onChange={(value)=>model['car'].selectControl(value)}
+            onInputChange={(value)=>model['car'].setSuggests(value)}
+          />
+
+          <MuiTextField
+            readOnly={true}
+            label={'Серийный номер'}
+            value={model['serial_number']}
+            className={styles['text-field']}
+            onChange={(value)=>model.changeControl('serial_number', value)}
+          />
+
+          <MuiTextField
+            rows={8}
+            rowsMax={8}
+            readOnly={true}
+            multiline={true}
+            label={'Комментарий'}
+            value={model['comment']}
+            className={styles['text-field']}
+            onChange={(value)=>model.changeControl('comment', value)}
+          />
         </div>
       </div>
     </MuiModal>
-  ) : null
+  )
 });
