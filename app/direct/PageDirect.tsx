@@ -36,14 +36,15 @@ export const PageDirect = observer((props) => {
   const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
   React.useEffect(() => {
     applySnapshot(messages, { ...props['messages'] })
-    const scroll = setInterval(() => {
+        const scroll = setInterval(() => {
       if (refSrollBar['current']['scrollValues']['scrollTop'] === 0) {
         refSrollBar['current'].scrollToBottom();
       } else {
+        refSrollBar['current'].scrollToBottom()
         clearInterval(scroll);
       }
     }, 0);
-  }, [props]);
+  }, [props['messages']]);
   const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
   });
@@ -210,8 +211,10 @@ export const PageDirect = observer((props) => {
                   if (response['status'] === 200) {
                     model.changeControl('content', null);
                     model.changeControl('storage', []);
-                    await Router.push({ pathname: router['pathname'], query: { ...router['query'] } });
+                    Router.push({ pathname: router['pathname'], query: { ...router['query'] } });
                   }
+   refSrollBar['current'].scrollToBottom();
+
                 }}
               />
 
