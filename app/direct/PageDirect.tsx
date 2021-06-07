@@ -49,6 +49,18 @@ export const PageDirect = observer((props) => {
     onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
   });
   const onSortEnd = (from: number, to: number) => {model.changeControl('storage', arrayMove(model['storage'], from, to))};
+  const options = {
+    buttons: {
+      showAutoplayButton: false,
+      showCloseButton: true,
+      showDownloadButton: false,
+      showFullscreenButton: false,
+      showThumbnailsButton: false,
+    },
+    thumbnails: {
+      showThumbnails: false,
+    }
+  };
   
   return (
 
@@ -133,7 +145,7 @@ export const PageDirect = observer((props) => {
                     <div key={index} data-sender={isUser} className={classMessage}>
                     
                       {storageLength > 0 ?
-                        <SRLWrapper>
+                        <SRLWrapper options={options}>
                         <div className={styles['thumbs-container']}>
                           
                             {row['storage'].map((file, i) => {
