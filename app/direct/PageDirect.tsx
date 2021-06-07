@@ -3,7 +3,6 @@ import Router from 'next/router';
 import styles from './class.module.css';
 
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import { observer } from 'mobx-react-lite';
 
 import { Clsx } from '@components/core';
@@ -146,11 +145,12 @@ export const PageDirect = observer((props) => {
                     
                       {storageLength > 0 ?
                         <SRLWrapper options={options}>
-                        <div className={styles['thumbs-container']}>
-                          
+                          <div className={styles['thumbs-container']}>
+                            
                             {row['storage'].map((file, i) => {
                               const classImage = Clsx(i < 2 ? styles['thumb-large'] : styles['thumb-small']);
                               const classImageActual =  Clsx(classImage, (storageLength > 5 && i === 4) && styles['thumb-plus'])
+                              
                               return i < 5 ? (
                           
                                 <LazyImage
@@ -171,7 +171,7 @@ export const PageDirect = observer((props) => {
 
                               ) : null})}
 
-                        </div>
+                          </div>
                         </SRLWrapper>
                       : null}
                       
@@ -225,8 +225,6 @@ export const PageDirect = observer((props) => {
                     model.changeControl('storage', []);
                     Router.push({ pathname: router['pathname'], query: { ...router['query'] } });
                   }
-   refSrollBar['current'].scrollToBottom();
-
                 }}
               />
 
@@ -234,21 +232,21 @@ export const PageDirect = observer((props) => {
 
             <div {...getRootProps({ className: `${styles['dropzone']} ${isDragActive ? styles['dropzone-active'] : ''}` })}>
               
-              {model['storage']['length'] ? (
+              {model['storage']['length'] ? 
                 <SortableList onSortEnd={onSortEnd} className={styles['dropzone-container']}>
 
                 {model['storage'].map((file, i) =>  i < 5 ? 
                     
                   <SortableItem key={file['file_id']}>
                     <div className={styles['dropzone-thumb']} >
-                      <img className={Clsx(styles['dropzone-img'],'animated fadeIn')} width={300} height={300} src={file['public_url']}/>
+                      <img src={file['public_url']} className={Clsx(styles['dropzone-img'],'animated fadeIn')}/>
                     </div>
                   </SortableItem>
 
                 : null)}
 
                 </SortableList>
-              ) : <span className={styles['dropzone-title']}>{'Перетащите сюда несколько файлов.'}</span>}
+              : <span className={styles['dropzone-title']}>{'Перетащите сюда несколько файлов.'}</span>}
 
             </div>
           </div>
