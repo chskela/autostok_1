@@ -149,7 +149,7 @@
 }
 
 .message-content {
-  @apply pt-[5px] mb-[10px];
+  @apply py-[3px];
 }
 
 /* /////////////////////////////////////////// */
@@ -243,7 +243,7 @@
 }
 
 .time-right {
-  @apply right-[30px] bottom-[6px];
+  @apply right-[30px] bottom-[3px];
 }
 
 /* /////////////////////////////////////////// */

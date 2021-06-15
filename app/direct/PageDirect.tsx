@@ -34,7 +34,7 @@ export const PageDirect = React.memo<any>(observer((props) => {
   const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
   React.useEffect(() => {
     applySnapshot(messages, { ...props['messages'] })
-        const scroll = setInterval(() => {
+    const scroll = setInterval(() => {
       if (refSrollBar['current']['scrollValues']['scrollTop'] === 0) {
         refSrollBar['current'].scrollToBottom();
       } else {
@@ -42,11 +42,12 @@ export const PageDirect = React.memo<any>(observer((props) => {
         clearInterval(scroll);
       }
     }, 0);
-  }, [props['messages']]);
+  }, [props]);
   const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
   });
   const onSortEnd = (from: number, to: number) => {model.changeControl('storage', arrayMove(model['storage'], from, to))};
+console.log(messages);
 
   return (
 
@@ -58,7 +59,7 @@ export const PageDirect = React.memo<any>(observer((props) => {
 
             <MuiScrollbar>
               
-            {direct['response'].map((row, index) => <DirectItem key={index} row={row} index={ index}/>)}
+            {direct['response'].map((row, index) => <DirectItem key={index} row={row}/>)}
 
             </MuiScrollbar>
             <MuiButton
@@ -74,7 +75,7 @@ export const PageDirect = React.memo<any>(observer((props) => {
           </div>
           
         <div className={styles['messages']}>
-          
+    
             <SimpleReactLightbox>
               <MuiScrollbar ref={refSrollBar}>
 
@@ -104,15 +105,17 @@ export const PageDirect = React.memo<any>(observer((props) => {
                 className={styles['button']}
                 onClick={async () => {
                   if (!model['content'] && model['storage']['length'] === 0) return;
+                  console.log(model);
                   
                   model['direct'].changeControl('id', router['query']['select'])
-                  const response = await model.createModel();
-
-                  if (response['status'] === 200) {
+                  // const response = await model.createModel();
+                  direct['response'][0]['message'].changeControl('content', model['content'])
+                  messages['response']
+                  // if (response['status'] === 200) {
                     model.changeControl('content', null);
                     model.changeControl('storage', []);
-                    Router.push({ pathname: router['pathname'], query: { ...router['query'] } });
-                  }
+                    // Router.push({ pathname: router['pathname'], query: { ...router['query'] } });
+                  // }
                 }}
               />
 
