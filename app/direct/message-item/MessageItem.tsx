@@ -1,15 +1,14 @@
 import React from 'react';
 import styles from './class.module.css';
 
-import { observer } from 'mobx-react-lite';
 import { Clsx } from '@components/core';
+import { observer } from 'mobx-react-lite';
 import { MuiSkeleton } from '@components/core';
 
 import moment from 'moment';
+import { RootStore } from '@store/RootStore';
 import { LazyImage } from 'react-lazy-images';
 import  { SRLWrapper } from 'simple-react-lightbox';
-import { RootStore } from '@store/RootStore';
-
 
 export const MessageItem = React.memo<any>(observer(({ row, index, messages }) => {
                   

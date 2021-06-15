@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'next/router';
 import styles from './class.module.css';
 
 import { useRouter } from 'next/router';
@@ -24,12 +23,16 @@ import { DirectMessagesList } from '@models/direct/DirectList';
 import { DirectItem } from './direct-item/DirectItem';
 import { MessageItem } from './message-item/MessageItem';
 
+import { DirectMessagesModel } from '@models/direct/DirectModel';
+import { RootStore } from '@store/RootStore';
+
 export const PageDirect = React.memo<any>(observer((props) => {
   const router = useRouter();
   const refSrollBar = React.useRef(null);
   const [model] = React.useState(DirectTypingModel.create());
   const onDrop = React.useCallback(files => { model.addStorage(files)}, []);
   const [direct] = React.useState(DirectList.create({ ...props['direct'] }));
+  
   React.useEffect(() => { applySnapshot(direct, { ...props['direct'] }) }, [props]);
   const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
   React.useEffect(() => {
@@ -42,12 +45,11 @@ export const PageDirect = React.memo<any>(observer((props) => {
         clearInterval(scroll);
       }
     }, 0);
-  }, [props]);
+  }, [props['messages']]);
   const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
   });
   const onSortEnd = (from: number, to: number) => {model.changeControl('storage', arrayMove(model['storage'], from, to))};
-console.log(messages);
 
   return (
 
@@ -105,17 +107,26 @@ console.log(messages);
                 className={styles['button']}
                 onClick={async () => {
                   if (!model['content'] && model['storage']['length'] === 0) return;
-                  console.log(model);
+
+                  const user = await RootStore['session']['user'].getModel();
+                  const message = DirectMessagesModel.create({
+                    id: Date.now().toString(),
+                    content: model['content'],
+                    date_send: new Date(),
+                    sender: user['data'],
+                    storage: [...model['storage']]
+                  });
                   
                   model['direct'].changeControl('id', router['query']['select'])
-                  // const response = await model.createModel();
-                  direct['response'][0]['message'].changeControl('content', model['content'])
-                  messages['response']
-                  // if (response['status'] === 200) {
+                  const response = await model.createModel();
+                  
+                  if (response['status'] === 200) {
+                    direct['response'][0]['message'].changeControl('content', model['content'])
+                    messages.changeControl('response', [...messages['response'], message])
                     model.changeControl('content', null);
                     model.changeControl('storage', []);
                     // Router.push({ pathname: router['pathname'], query: { ...router['query'] } });
-                  // }
+                  }
                 }}
               />
 
