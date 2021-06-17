@@ -3,6 +3,7 @@ import styles from './class.module.css';
 
 import { useRouter } from 'next/router';
 import { observer } from 'mobx-react-lite';
+import { RootStore } from '@store/RootStore';
 
 import { Clsx } from '@components/core';
 import { MuiScrollbar } from '@components/core';
@@ -19,20 +20,18 @@ import { applySnapshot } from 'mobx-state-tree';
 import { DirectList } from '@models/direct/DirectList';
 import { DirectTypingModel } from '@models/direct/DirectModel';
 import { DirectMessagesList } from '@models/direct/DirectList';
+import { DirectMessagesModel } from '@models/direct/DirectModel';
 
 import { DirectItem } from './direct-item/DirectItem';
 import { MessageItem } from './message-item/MessageItem';
-
-import { DirectMessagesModel } from '@models/direct/DirectModel';
-import { RootStore } from '@store/RootStore';
 
 export const PageDirect = React.memo<any>(observer((props) => {
   const router = useRouter();
   const refSrollBar = React.useRef(null);
   const [model] = React.useState(DirectTypingModel.create());
   const onDrop = React.useCallback(files => { model.addStorage(files)}, []);
+  const onChange = React.useCallback((value) => model.changeControl('content', value), []);
   const [direct] = React.useState(DirectList.create({ ...props['direct'] }));
-  
   React.useEffect(() => { applySnapshot(direct, { ...props['direct'] }) }, [props]);
   const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
   React.useEffect(() => {
@@ -45,7 +44,7 @@ export const PageDirect = React.memo<any>(observer((props) => {
         clearInterval(scroll);
       }
     }, 0);
-  }, [props['messages']]);
+  }, [props['messages'], messages]);
   const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
   });
@@ -84,7 +83,8 @@ export const PageDirect = React.memo<any>(observer((props) => {
               {messages['response'].map((row, index) => <MessageItem key={index} row={row} index={index} messages={ messages}/>)}
                 
               </MuiScrollbar>
-            </SimpleReactLightbox>
+          </SimpleReactLightbox>
+          
             <div className={styles['input']}>
 
               <input {...getInputProps()} />
@@ -92,7 +92,7 @@ export const PageDirect = React.memo<any>(observer((props) => {
               <MuiTextField
                 value={model['content']}
                 className={styles['textinput']}
-                onChange={(value) => model.changeControl('content', value)}
+                onChange={onChange}
               />
 
               <MuiButton
@@ -108,20 +108,18 @@ export const PageDirect = React.memo<any>(observer((props) => {
                 onClick={async () => {
                   if (!model['content'] && model['storage']['length'] === 0) return;
 
-                  const user = await RootStore['session']['user'].getModel();
-                  const message = DirectMessagesModel.create({
-                    id: Date.now().toString(),
-                    content: model['content'],
-                    date_send: new Date(),
-                    sender: user['data'],
-                    storage: [...model['storage']]
-                  });
-                  
                   model['direct'].changeControl('id', router['query']['select'])
                   const response = await model.createModel();
                   
                   if (response['status'] === 200) {
                     direct['response'][0]['message'].changeControl('content', model['content'])
+                    const message = {
+                      id: Date.now().toString(),
+                      content: model['content'],
+                      date_send: new Date(),
+                      sender: RootStore['session']['user'],
+                      storage: [...model['storage']]
+                    };
                     messages.changeControl('response', [...messages['response'], message])
                     model.changeControl('content', null);
                     model.changeControl('storage', []);

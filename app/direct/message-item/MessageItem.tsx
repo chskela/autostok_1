@@ -8,19 +8,17 @@ import { MuiSkeleton } from '@components/core';
 import moment from 'moment';
 import { RootStore } from '@store/RootStore';
 import { LazyImage } from 'react-lazy-images';
-import  { SRLWrapper } from 'simple-react-lightbox';
+import { SRLWrapper } from 'simple-react-lightbox';
 
 export const MessageItem = React.memo<any>(observer(({ row, index, messages }) => {
-                  
   const image = row['sender'].getPreview();
+  const storageLength = row['storage']['length'];
   const isUser = RootStore['session']['user']['id'] === row['sender']['id'];
   const isLast = row['sender']['id'] !== messages['response'][index + 1]?.['sender']['id'];
   const classTime = Clsx(styles['time'], { [styles['time-right']]: isUser, [styles['time-left']]: !isUser });
   const classAvatar = Clsx(styles['avatar'], { [styles['avatar-right']]: isUser, [styles['avatar-left']]: !isUser });
   const classCompany = Clsx(styles['company'], { [styles['company-right']]: isUser, [styles['company-left']]: !isUser });
   const classMessage = Clsx(styles['message'], { [styles['message-right']]: isUser, [styles['message-left']]: !isUser, [styles['message-islast']]: !isLast });
-                  
-  const storageLength = row['storage']['length'];
   const options = {
     buttons: {
       showAutoplayButton: false,
@@ -33,6 +31,7 @@ export const MessageItem = React.memo<any>(observer(({ row, index, messages }) =
       showThumbnails: false,
     }
   };
+
   return (
     <div key={index} data-sender={isUser} className={classMessage}>
                     
