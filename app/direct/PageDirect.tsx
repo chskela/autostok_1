@@ -32,7 +32,7 @@ export const PageDirect = React.memo<any>(observer((props) => {
   const onChange = React.useCallback((value) => model.changeControl('content', value), []);
   const [direct] = React.useState(DirectList.create({ ...props['direct'] }));
   React.useEffect(() => { applySnapshot(direct, { ...props['direct'] }) }, [props]);
-  const [messages, setMessages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
+  const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
   React.useEffect(() => {
     applySnapshot(messages, { ...props['messages'] })
   }, [props['messages']]);
@@ -40,11 +40,8 @@ export const PageDirect = React.memo<any>(observer((props) => {
   React.useEffect(() => {
       const scroll = setInterval(() => {
       if (refSrollBar['current']['scrollValues']['scrollTop'] === 0) {
-        console.log('1');
-        
         refSrollBar['current'].scrollToBottom();
       } else {
-        console.log('2');
         refSrollBar['current'].scrollToBottom()
         clearInterval(scroll);
       }
