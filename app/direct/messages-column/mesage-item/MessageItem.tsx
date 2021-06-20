@@ -14,7 +14,7 @@ export const MessageItem = React.memo<any>(observer(({ row, index, messages }) =
   const image = row['sender'].getPreview();
   const storageLength = row['storage']?.['length'];
   const isUser = RootStore['session']['user']['id'] === row['sender']['id'];
-  const isLast = row['sender']['id'] !== messages['response'][index + 1]?.['sender']['id'];
+  const isLast = row['sender']['id'] !== messages['response']?.[index + 1]?.['sender']['id'];
   const classTime = Clsx(styles['time'], { [styles['time-right']]: isUser, [styles['time-left']]: !isUser });
   const classAvatar = Clsx(styles['avatar'], { [styles['avatar-right']]: isUser, [styles['avatar-left']]: !isUser });
   const classCompany = Clsx(styles['company'], { [styles['company-right']]: isUser, [styles['company-left']]: !isUser });
@@ -33,7 +33,7 @@ export const MessageItem = React.memo<any>(observer(({ row, index, messages }) =
   };
 
   return (
-    <div key={index} data-sender={isUser} className={classMessage}>
+    <div data-sender={isUser} className={classMessage}>
                     
       {storageLength > 0 ?
         <SRLWrapper options={options}>

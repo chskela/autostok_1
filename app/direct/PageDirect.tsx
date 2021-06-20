@@ -6,12 +6,10 @@ import { observer } from 'mobx-react-lite';
 import { RootStore } from '@store/RootStore';
 
 import { Clsx } from '@components/core';
-import { MuiScrollbar } from '@components/core';
 import { MuiTextField, MuiButton } from '@components/core';
 import { PaperclipIcon, Navigation2 } from '@components/icons';
 
 import arrayMove from 'array-move';
-import SimpleReactLightbox from 'simple-react-lightbox';
 import SortableList, { SortableItem } from 'react-easy-sort';
 
 import { useDropzone } from 'react-dropzone';
@@ -21,36 +19,22 @@ import { DirectList } from '@models/direct/DirectList';
 import { DirectTypingModel } from '@models/direct/DirectModel';
 import { DirectMessagesList } from '@models/direct/DirectList';
 
-import { DirectItem } from './direct-item/DirectItem';
-import { MessageItem } from './message-item/MessageItem';
+import { DirectColumn } from './direct-column/DirectColumn';
+import { MessagesList } from './messages-column/MessagesList';
 
 export const PageDirect = React.memo<any>(observer((props) => {
   const router = useRouter();
-  const refSrollBar = React.useRef(null);
   const [model] = React.useState(DirectTypingModel.create());
   const onDrop = React.useCallback(files => { model.addStorage(files)}, []);
-  const onChange = React.useCallback((value) => model.changeControl('content', value), []);
   const [direct] = React.useState(DirectList.create({ ...props['direct'] }));
   React.useEffect(() => { applySnapshot(direct, { ...props['direct'] }) }, [props]);
+  React.useEffect(() => {applySnapshot(messages, { ...props['messages'] })}, [props]);
   const [messages] = React.useState(DirectMessagesList.create({ ...props['messages'] }));
-  React.useEffect(() => {
-    applySnapshot(messages, { ...props['messages'] })
-  }, [props['messages']]);
-
-  React.useEffect(() => {
-      const scroll = setInterval(() => {
-      if (refSrollBar['current']['scrollValues']['scrollTop'] === 0) {
-        refSrollBar['current'].scrollToBottom();
-      } else {
-        refSrollBar['current'].scrollToBottom()
-        clearInterval(scroll);
-      }
-      return () => clearInterval(scroll);
-    }, 0);
-  });
+  
   const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDrop, noClick: true, accept: ['image/png', 'image/jpg', 'image/jpeg'], multiple: true
   });
+  const onChange = React.useCallback((value) => model.changeControl('content', value), []);
   const onSortEnd = (from: number, to: number) => {model.changeControl('storage', arrayMove(model['storage'], from, to))};
 
   return (
@@ -60,12 +44,9 @@ export const PageDirect = React.memo<any>(observer((props) => {
           <div className={styles['direct']}>
 
             <div className={styles['direct-title']}>{'Сообщения'}</div>
-
-            <MuiScrollbar>
-              
-            {direct['response'].map((row, index) => <DirectItem key={index} row={row}/>)}
-
-            </MuiScrollbar>
+            
+            <DirectColumn direct={direct['response']} />
+            
             <MuiButton
               label={'Загрузить еще'}
               loading={model['isFetching']}
@@ -78,16 +59,10 @@ export const PageDirect = React.memo<any>(observer((props) => {
             />
           </div>
           
-        <div className={styles['messages']}>
-    
-            <SimpleReactLightbox>
-              <MuiScrollbar ref={refSrollBar}>
-
-              {messages['response'].map((row, index) => <MessageItem key={index} row={row} index={index} messages={ messages}/>)}
-                
-              </MuiScrollbar>
-          </SimpleReactLightbox>
+          <div className={styles['messages']}>
           
+            <MessagesList messages={messages['response']}/>
+                    
             <div className={styles['input']}>
 
               <input {...getInputProps()} />
